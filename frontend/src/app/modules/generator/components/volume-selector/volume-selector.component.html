@@ -1,0 +1,43 @@
+<h2><span>{{ 'GENERATOR_TITLE1' | translate }}</span></h2>
+<p class="mat-text-muted">{{ 'GENERATOR_SUBTITLE1' | translate }}</p>
+
+<div fxLayout="column" fxLayoutWrap="wrap" class="pt-1 pb-1">
+  <p class="">{{ 'FORMAT_TITLE' | translate }}</p>
+  <mat-radio-group class="pa-xs"  fxLayout="row" fxLayoutWrap="wrap" (change)="onSelectFormat($event)">
+    <mat-radio-button class="pa-xs" value="FLAT">{{ 'FLAT' | translate }}</mat-radio-button>
+    <mat-radio-button class="pa-xs" *ngIf="choice!='SQL'" value="ORIGINAL">{{ 'ORIGINAL' | translate }}</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+<div *ngIf="techniqueShow" fxLayout="column" fxLayoutWrap="wrap" class="pt-1 pb-1">
+  <p class="">{{ 'TECHNIQUE_TITLE' | translate }}</p>
+  <mat-radio-group  fxLayout="row" fxLayoutWrap="wrap" class="pa-xs" (change)="onSelectTechnique($event)">
+    <mat-radio-button class="pa-xs"  value="BYCOUNT">{{ 'BYCOUNT' | translate }}</mat-radio-button>
+    <mat-radio-button class="pa-xs" value="BYVOLUME">{{ 'BYVOLUME' | translate }}</mat-radio-button>
+  </mat-radio-group>
+</div>
+
+
+<form *ngIf="!submitted && formShow" [formGroup]="form" (ngSubmit)="onSubmit()" #volumeSelectionForm="ngForm">
+  
+  <div fxLayout="column" fxLayoutWrap="wrap" fxLayoutAlign="space-around" class="pt-1 pb-1">
+    <div class="pl-1 pr-1">
+      <mat-form-field style="width: 100%">
+        <input matInput formControlName="volume" required placeholder="{{'FORM_VOLUME' | translate}}">
+        <span matPrefix>
+          <span class="lnr lnr-file pr-1"></span>
+        </span>
+        <span *ngIf="technique!='BYCOUNT'" matSuffix>
+          MB
+        </span>
+      </mat-form-field>
+      <small *ngIf="form.controls['volume'].hasError('required') && form.controls['volume'].touched" class="mat-text-warn">{{'FORM_VOLUME_ERROR1' | translate}}</small>
+    </div>
+
+    <div class="pt-1" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center">
+      <button fxFlex="50%" mat-button color="primary" class="btn-block" type="submit" [disabled]="!volumeSelectionForm.form.valid">{{'NEXT_BUTTON' | translate}}</button>
+    </div>
+  </div>
+
+</form>
+

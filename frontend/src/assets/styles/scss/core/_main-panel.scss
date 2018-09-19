@@ -1,0 +1,46 @@
+/* $main-panel
+ ------------------------------------------*/
+ $mat-toolbar-height-desktop: 56px !default;
+ $mat-toolbar-height-mobile-portrait: 56px !default;
+ $mat-toolbar-height-mobile-landscape: 56px !default;
+ 
+ .app-inner {
+   position: relative;
+   width: 100%;
+   max-width: 100%;
+   //height: calc(100vh - #{$mat-toolbar-height-desktop} );
+   //@include flexbox;
+   //@include flex-direction(row);
+   color:#000000!important;
+   background: url(/assets/images/bg-scribble-light.png);
+ }
+
+ .grid-container {
+  //max-width: 1366px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 60px!important;
+  padding-right: 60px!important;
+  box-sizing: border-box;
+  padding-top: 8px;
+  min-height:600px;
+  //z-index: 1000;
+}
+@include media-breakpoint-down(sm) {
+  .grid-container {
+    padding-left: 24px!important;
+    padding-right: 24px!important;
+  }
+}
+@include media-breakpoint-down(xs) {
+  .grid-container {
+    padding-left: 0!important;
+    padding-right: 0!important;
+  }
+}
+
+ @media ($mat-xsmall) {
+    .app-inner {
+      //height: calc(100vh - #{$mat-toolbar-height-mobile-portrait});
+    }
+  }

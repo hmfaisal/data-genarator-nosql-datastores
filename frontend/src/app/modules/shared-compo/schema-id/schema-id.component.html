@@ -1,0 +1,26 @@
+<mat-dialog-content *ngIf="data" fxLayout="column" class="dialog">
+  <div class="pb-1">
+    <span>{{ 'ID' | translate }}</span>
+    <span>:</span>
+    <span fxFlex></span>
+    <span>{{data.schema.id}}</span>
+  </div>
+  <div class="pb-1">
+    <span>{{ 'NAME' | translate }}</span>
+    <span>:</span>
+    <span fxFlex></span>
+    <span>{{data.schema.nodeName}}</span>
+  </div>
+  <div class="pb-1">
+    <span>{{ 'PARENT_NAME' | translate }}</span>
+    <span>:</span>
+    <span fxFlex></span>
+    <span>{{data.schema.parentName}}</span>
+  </div>
+  <div class="pb-1">
+    <span>{{ 'DEPTH' | translate }}</span>
+    <span>:</span>
+    <span fxFlex></span>
+    <span>{{data.schema.depth}}</span>
+  </div>
+</mat-dialog-content>

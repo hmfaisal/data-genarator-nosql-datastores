@@ -1,0 +1,40 @@
+<h2>
+    <span>{{ 'GENERATOR_TITLE2' | translate }}</span>
+</h2>
+<p class="mat-text-muted">{{ 'GENERATOR_SUBTITLE2' | translate }}</p>
+
+<div *ngIf="!schemaTree" (click)="toggleSchemaTree()" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center">
+    <button fxFlex="50%" (click)="toggleSchemaTree()" mat-button color="primary" class="btn-block">{{'SHOW_SCHEMA_BUTTON' | translate}}</button>
+</div>
+<div *ngIf="schemaTree">
+    <app-schema-tree fxLayout="row" fxLayoutWrap="wrap"></app-schema-tree>
+    <div class="pt-1" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center">
+        <button fxFlex="50%" (click)="toggleSchemaTree()" mat-button color="primary" class="btn-block">{{'HIDE_BUTTON' | translate}}</button>
+    </div>
+</div>
+
+<div *ngIf="methods.length>0 && nodes.length>0">
+    <div *ngFor="let node of nodes;let i =index;">
+        <div class="pa-xs border" fxLayout="row" fxLayoutWrap="wrap">
+            <div fxFlex="25%" fxFlex.xs="100%">
+                <div>{{node.nodeName}}</div>
+                <div *ngFor="let method of methods;">
+                    <div *ngIf="method.id === node.id" class="mat-text-muted text-sm">
+                        <span>{{'VOLUME' | translate}}</span>
+                        <span>:</span>
+                        <span>{{method.total}}</span>
+                    </div>
+                </div>
+            </div>
+            <mat-radio-group fxFlex="75%" fxFlex.xs="100%" fxLayoutAlign="end center" (change)="onChange(node.id,$event)">
+                <mat-radio-button  fxFlex="25%" fxFlex.xs="33.33%" *ngIf="format!='ORIGINAL'" value="MIMICKUNIQUE" (click)="onUnique(node.id)" >{{ 'MIMICKUNIQUE' | translate }}</mat-radio-button>
+                <mat-radio-button fxFlex="25%" fxFlex.xs="33.33%" [checked]='true' (click)="onOther(node.id)" value="MIMICKDUPLICATE">{{ 'MIMICKDUPLICATE' | translate }}</mat-radio-button>
+                <mat-radio-button fxFlex="25%" fxFlex.xs="33.33%" (click)="onOther(node.id)" value="RANDOM">{{ 'RANDOM' | translate }}</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+    </div>
+    <div class="pt-xs" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center">
+        <button fxFlex="50%" mat-button color="primary" (click)="onSubmit()" class="btn-block">{{'NEXT_BUTTON' | translate}}</button>
+    </div>
+</div>

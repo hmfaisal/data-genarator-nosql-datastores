@@ -1,0 +1,25 @@
+@import "~assets/styles/scss/material-variable";
+@import "~assets/styles/scss/mixins";
+@import "~assets/styles/scss/app-variable";
+@include material-variables($theme);
+
+a {
+  span{
+    @include hover-focus {
+      color:#ffffff!important;
+      .lnr {
+        color:#ffffff!important;
+      }
+    }
+  }
+  
+}
+.active{
+  font-weight: 500;
+  span{
+    color:#ffffff!important;
+    .lnr{
+      color:#ffffff!important;
+    }
+  }
+}

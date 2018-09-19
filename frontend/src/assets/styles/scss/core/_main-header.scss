@@ -1,0 +1,62 @@
+/* $header
+ ------------------------------------------*/
+ mat-toolbar {
+    .toolbar-avatar {
+      width: 40px;
+      height: 40px;
+      line-height: 8px;
+    }
+    .toolbar-avatar img{
+      width: 40px;
+      border-radius: 50%;
+    }
+    &.main-header {
+      //padding: 0 4px;
+      position: relative;
+      //box-shadow: 0 1px 8px rgba(0,0,0,.3);
+      color: #ffffff;
+      z-index: 9;
+      .branding {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin: auto 0;
+        line-height: 50px;
+        padding: 0 ;
+      }
+      .logo {
+        background-image: url(/assets/images/logo/logo.png);
+        width: 83px;
+        height: 40px;
+        -webkit-background-size: 83px 40px;
+        background-size: 83px 40px;
+        margin: auto;
+      }
+      
+    }
+  }
+  
+  // Specific height for mobile devices in portrait mode.
+  @media ($mat-xsmall) and (orientation: portrait) {
+    mat-toolbar {
+      &.main-header {
+        .branding {
+          padding: 0 ;
+        }
+        .logo {
+          width: 83px;
+          height: 40px;
+          -webkit-background-size: 83px 40px;
+          background-size: 83px 40px;
+        }
+      }
+    }
+  }
+  
+  
+  

@@ -1,0 +1,15 @@
+@import "~assets/styles/scss/material-variable";
+@import "~assets/styles/scss/mixins";
+@import "~assets/styles/scss/app-variable";
+@include material-variables($theme);
+
+mat-toolbar {
+  background: mat-color($primary)!important;
+  font-weight:300!important;
+  a{
+    color:#ffffff;
+  }
+}
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 56px!important;
+}

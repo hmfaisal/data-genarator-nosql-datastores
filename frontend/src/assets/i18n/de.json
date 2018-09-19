@@ -1,0 +1,31 @@
+{
+    "HOME": "Zuhause",
+    "SCHEMA":"Schema Extract",
+    "GENERATOR":"Data Generation",
+    "MIMICKUNIQUE":"Mimic Unique",
+    "MIMICKDUPLICATE":"Mimic Duplicate",
+    "RANDOM":"Random",
+
+    "SAVE_BUTTON":"Sparen",
+    "SELECT_BUTTON":"Select",
+    "SUBMIT_BUTTON":"Submit",
+    "BACK_BUTTON":"Zurück",
+    "NEXT_BUTTON":"Weiter",
+
+    "ADD_SUCCESSFUL":"Added Successfully",
+    "EDIT_SUCCESSFUL":"Updated Successfully",
+    "DELETE_SUCCESSFUL":"Removed Successfully",
+    "CANCEL_SUCCESSFUL":"Cancel Successfully",
+
+    "500": "500",
+	"500_TITLE": "Wir haben einen internen Serverfehler!",
+	"500_SUBTITLE": "Entschuldigung, aber die Seite, die Sie sehen wollten, existiert nicht",
+	"404_TITLE": "Seite nicht gefunden!",
+	"404_SUBTITLE": "Entschuldigung, aber die Seite, die Sie sehen wollten, existiert nicht",
+    "WRONG_ERROR": "Etwas ist schief gelaufen.",
+    
+    "SIMILAR_MATERIALS":"Similar materials you may be interested on",
+   
+    "RESULT_NOT_FOUND":"Keine Einträge gefunden"
+
+}

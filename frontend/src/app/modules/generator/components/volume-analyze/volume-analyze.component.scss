@@ -1,0 +1,14 @@
+@import "~assets/styles/scss/material-variable";
+@import "~assets/styles/scss/mixins";
+@import "~assets/styles/scss/app-variable";
+@include material-variables($theme);
+
+.button{
+    border-top: 1px solid mat-color($primary);
+    border-bottom: 1px solid mat-color($primary);
+    cursor: pointer;
+}
+
+.border{
+    border-top: 1px solid #b4b4b4; 
+}

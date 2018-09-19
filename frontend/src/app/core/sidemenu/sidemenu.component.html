@@ -1,0 +1,8 @@
+<span *ngIf="menuitem && menuitem.type === 'sub'">
+  <mat-list-item (click)="sidemenuClose()">
+    <a [routerLink]="[ menuitem.link ]" routerLinkActive="active" >
+      <span class="lnr {{menuitem.icon}} pr-1"></span>
+      <span class="text-md">{{ menuitem.name | translate }}</span>
+    </a>
+  </mat-list-item>
+</span>

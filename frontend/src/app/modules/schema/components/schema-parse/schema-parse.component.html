@@ -1,0 +1,22 @@
+<h2><span>{{ 'SCHEMA_TITLE1' | translate }}</span></h2>
+<p class="mat-text-muted">{{ 'SCHEMA_SUBTITLE1' | translate }}</p>
+
+<form *ngIf="!submitted" [formGroup]="form" (ngSubmit)="onSubmit()" #selectionForm="ngForm">
+  <div fxLayout="column" fxLayoutWrap="wrap" fxLayoutAlign="space-around" class="pt-1 pb-1">
+    <div class="pl-1 pr-1">
+      <mat-form-field style="width: 100%">
+        <input matInput formControlName="file" required placeholder="{{'FORM_FILE' | translate}}">
+        <span matPrefix>
+          <span class="lnr lnr-file pr-1"></span>
+        </span>
+      </mat-form-field>
+      <small *ngIf="form.controls['file'].hasError('required') && form.controls['file'].touched" class="mat-text-warn">{{'FORM_FILE_ERROR1' | translate}}</small>
+    </div>
+
+    <div class="pt-1" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center center">
+      <button fxFlex="50%" mat-button color="primary" class="btn-block" type="submit" [disabled]="!selectionForm.form.valid">{{'NEXT_BUTTON' | translate}}</button>
+    </div>
+  </div>
+
+</form>
+

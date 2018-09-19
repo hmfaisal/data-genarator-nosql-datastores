@@ -1,0 +1,11 @@
+<h2><span>{{ 'SCHEMA_TITLE2' | translate }}</span></h2>
+<p class="mat-text-muted">{{ 'SCHEMA_SUBTITLE2' | translate }}</p>
+
+<app-schema-tree></app-schema-tree>
+<app-schema-analyze-button></app-schema-analyze-button>
+
+<div *ngIf="endReached" (click)="scrollToTop()" class='scrolltop'>
+    <div class='scroll icon'>
+        <span class="lnr lnr-arrow-up"></span>
+    </div>
+</div>

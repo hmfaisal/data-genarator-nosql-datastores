@@ -1,0 +1,3 @@
+<a *ngIf="menuitem && menuitem.type === 'sub'" class="ml-xs" [routerLink]="[menuitem.link]" routerLinkActive="active">
+    <span class="mr-xs text-secondary text-sm">{{ menuitem.name | translate }}</span>
+</a>

@@ -1,0 +1,17 @@
+<h2>
+    <span>{{ 'GENERATOR_TITLE3' | translate }}</span>
+</h2>
+<p class="mat-text-muted">{{ 'GENERATOR_SUBTITLE3' | translate }}</p>
+
+<h4>{{ 'BYFILE_TITLE' | translate }}</h4>
+<mat-radio-group class="pa-xs" fxLayout="column" fxLayoutWrap="wrap" (change)="onSelect($event)">
+  <mat-radio-button class="pa-xs" value="JSON">{{ 'JSON' | translate }}</mat-radio-button>
+  <mat-radio-button class="pa-xs" value="SQL">{{ 'SQL' | translate }}</mat-radio-button>
+  <mat-radio-button class="pa-xs" value="CQL">{{ 'CQL' | translate }}</mat-radio-button>
+  <mat-radio-button class="pa-xs" value="GRAPHSON">{{ 'GRAPHSON' | translate }}</mat-radio-button>
+  <mat-radio-button class="pa-xs" value="XML">{{ 'XML' | translate }}</mat-radio-button>
+  <!--
+  <mat-radio-button class="pa-xs" value="CSV">{{ 'CSV' | translate }}</mat-radio-button>
+  -->
+</mat-radio-group>
+

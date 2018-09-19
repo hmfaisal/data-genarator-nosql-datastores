@@ -1,0 +1,41 @@
+<div class="app mat-typography" [dir]="dir">
+  
+    <mat-toolbar class="main-header">
+      <div class="branding pr-1">
+        <a [routerLink]="['/']">
+          <div class="logo"></div>
+        </a>
+      </div>
+      <div *ngFor="let menuitem of menuItems.getAll()">
+        <app-nav fxShow="false" fxShow.gt-xs [menuitem]="menuitem"></app-nav>
+      </div>
+      <div fxFlex></div>
+      <div *ngFor="let menuitem of menuItems.getAll()">
+        <a *ngIf="menuitem.type ==='lang'" [matMenuTriggerFor]="lang" class="ml-xs" routerLinkActive="active">
+          <span class="lnr {{ menuitem.icon}}"></span>
+        </a>
+        <a *ngIf="menuitem.type ==='more'" class="ml-xs" fxHide.gt-xs (click)="toggle()"  routerLinkActive="active">
+          <span class="lnr {{ menuitem.icon}}"></span>
+        </a>
+        <mat-menu #lang="matMenu" x-position="before" y-position="after">
+          <button *ngFor="let childitem of menuitem.children" mat-menu-item (click)="changeLanguage(childitem.link)">
+            {{ childitem.name | translate }}
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+  
+    <mat-sidenav-container class="app-inner" >
+      <mat-sidenav #sidemenu position="end" fxHide.gt-xs class="sidebar-panel" id="sidebar-panel" mode="over" opened="false" (close)="sideClose($event)">
+        <mat-nav-list class="navigation">
+          <span *ngFor="let menuitem of menuItems.getAll()">
+            <app-sidemenu (langChange)="changeLanguage($event)" (showEvent)="sideClose($event)" [menuitem]="menuitem"></app-sidemenu>
+          </span>
+        </mat-nav-list>
+      </mat-sidenav>
+      <mat-sidenav-content  class="grid-container">
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  
+  </div>

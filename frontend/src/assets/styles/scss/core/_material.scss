@@ -1,0 +1,155 @@
+.mat-tab-group {
+  font-family:'Montserrat', sans-serif!important;
+}
+.mat-tab-header {
+  border-bottom: 1px solid #e3e3ec!important; 
+}
+.mat-tab-label {
+  font-size: 1.1rem!important;
+  font-weight: 400!important;
+  color:#000000!important;
+  font-family:'Montserrat', sans-serif!important;
+}
+.mat-card{
+  border-radius: 0px !important;
+  font-family:'Montserrat', sans-serif!important;
+  -moz-box-sizing: border-box!important; 
+  -webkit-box-sizing: border-box!important; 
+   box-sizing: border-box!important; 
+   min-width: 0;
+   padding:0!important;
+}
+.mat-card-title{
+  font-size: 1rem!important;
+  font-family:'Montserrat', sans-serif!important;
+  padding:0!important;
+  -moz-box-sizing: border-box!important; 
+  -webkit-box-sizing: border-box!important; 
+   box-sizing: border-box!important;
+  @include hover-focus {
+    cursor: pointer;
+  }
+}
+.mat-card-content{
+  font-size: 0.9rem!important;
+  padding: 0 !important;
+  -moz-box-sizing: border-box!important; 
+  -webkit-box-sizing: border-box!important; 
+   box-sizing: border-box!important;
+  font-family:'Montserrat', sans-serif!important;
+}
+.mat-card-subtitle{
+  font-size: 1rem!important;
+  -moz-box-sizing: border-box!important; 
+  -webkit-box-sizing: border-box!important; 
+   box-sizing: border-box!important;
+  padding: 0 !important;
+}
+.mat-card-actions{
+  font-size: 1rem!important;
+  -moz-box-sizing: border-box!important; 
+  -webkit-box-sizing: border-box!important; 
+   box-sizing: border-box!important;
+  padding: 0!important;
+}
+.mat-chip{
+  padding: 0px 4px!important;
+  border-radius: 2px!important;
+  color:#fff!important;
+  font-family:'Montserrat', sans-serif!important;
+}
+
+.mat-button{
+  font-weight:400!important;
+}
+.mat-button.mat-primary{
+  font-family:'Montserrat', sans-serif!important;
+  width:100%;
+  border-radius: 0;
+  color:#ffffff!important;
+  background-color: mat-color($primary);
+}
+.mat-button.mat-accent{
+  font-family:'Montserrat', sans-serif!important;
+  background-color: #fbe9e7;
+  color: #4d4d4d!important;
+  border-radius: 0;
+  //border: 1px solid mat-color($primary);
+}
+.mat-button.mat-warn{
+  font-family:'Montserrat', sans-serif!important;
+  background-color: mat-color($warn);
+  color:#ffffff!important;
+  border-radius: 0;
+}
+.mat-button[disabled]{
+  font-family:'Montserrat', sans-serif!important;
+  width:100%;
+  border-radius: 0;
+  color:#000000!important;
+  background-color: #ffffff;
+  border: 1px solid mat-color($primary);
+}
+
+.dialog-body{
+  color: #000000!important;
+  font-weight:400!important;
+  border-radius: 2px;
+}
+
+html.cdk-global-scrollblock {
+  width: initial;
+  position: initial;
+  overflow-y: initial;
+}
+
+body.dialog-open {
+    overflow: hidden;
+}
+
+body.dialog-open .cdk-global-overlay-wrapper {
+    pointer-events: all;
+    //display: block !important;
+    overflow: auto;
+    //padding: 30px 0;
+    position: fixed;
+}
+
+body.dialog-open .cdk-overlay-pane {
+    position: relative !important;
+    margin: auto !important;
+}
+
+@include media-breakpoint-down(sm) {
+  body.dialog-open .cdk-overlay-pane {
+    max-width: 90vw!important;
+  }
+}
+
+.cdk-overlay-backdrop {
+    position: fixed !important;
+}
+
+.cdk-overlay-dark-backdrop {
+  background: rgba(0,0,0,.6);
+}
+
+.mat-dialog-container {
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+    height: auto !important;
+    overflow: initial !important;
+    background: #edeff0!important;
+}
+
+.mat-dialog-content {
+    max-width: none !important;
+    max-height: none !important;
+    overflow: initial !important;
+}
+
+.mat-drawer-content {
+  overflow: hidden!important;
+}
+
+

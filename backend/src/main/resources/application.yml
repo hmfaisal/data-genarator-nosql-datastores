@@ -1,0 +1,10 @@
+app:
+  name: backend
+# ===============================
+# Log
+# ===============================
+logging:
+  level:
+    org.springframework.web: ERROR
+    com.bfwg: DEBUG
+    

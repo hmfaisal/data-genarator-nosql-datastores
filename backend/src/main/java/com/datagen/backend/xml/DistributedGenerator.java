@@ -42,9 +42,10 @@ public class DistributedGenerator {
 		
 		for(JsNode value : values) {
 			int id = value.getId();
-			
+			int parentId = value.getParentId();
+			LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
 			if(DistributedCurrentOccuranceHelper.isInBlock(valueTotal,id,block)){
-				int loop = FieldOccuranceHelper.getLoop(valueTotal,id,block);
+				int loop = FieldOccuranceHelper.getNodeLoop(pLoop,currentValueTotal,id,parentId,block);
 				for(int i =1;i<=loop;i++){
 					DistributedCurrentOccuranceHelper.setCurrentLoop(currentValueTotal, id, block);
 					

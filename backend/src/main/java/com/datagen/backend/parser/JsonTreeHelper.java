@@ -87,7 +87,6 @@ public class JsonTreeHelper {
 		int parentId=n.getParentId();
     	LinkedMultiValueMap<String, Integer> loop = n.getLoop();
 		int parentCurrent = 1;
-		System.out.println("node"+id);
 		if(parentId==0){
 
 		}else{
@@ -99,7 +98,6 @@ public class JsonTreeHelper {
 			}else{
 				if(occurance.containsKey(iter)){
 					int cur= occurance.getFirst(iter);
-					System.out.println(cur);
 					parentCurrent = cur;
 				}
 			}

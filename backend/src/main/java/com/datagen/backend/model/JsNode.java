@@ -72,4 +72,3 @@ public class JsNode {
 		return this.valueType = valueType;
 	}
 }
-

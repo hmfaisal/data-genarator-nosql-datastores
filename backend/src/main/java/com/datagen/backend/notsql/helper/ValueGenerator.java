@@ -33,12 +33,26 @@ public class ValueGenerator {
 
 	public static void distributedValueGenerator(StringBuilder sb, long current,LinkedMultiValueMap<String, Object> valueMap, String method,List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue,List<ValueCheck> valueTotal,List<ValueCheck> currentTotal,int id){
 
+		LinkedMultiValueMap<String, Long> curTotal = FlatCurrentOccuranceHelper.currentMap(id, valueTotal);
+		boolean run =true;
+		long total=0 ;
+		for(String vType : curTotal.keySet()){
+			long cTotal= curTotal.getFirst(vType);
+			total=total+cTotal;
+			if(current<=total && run){
+				runGenerator(sb,vType,valueMap,method,currentValue,tempCurrentValue,id);
+				run = false;
+			}
+		}
+
+		/*
 		String type = DistributedCurrentOccuranceHelper.currentMap(id, valueTotal,currentTotal,current);
 
 		if(type!=null){
 			DistributedCurrentOccuranceHelper.setCurrentValue(currentTotal,id,type);
 			runGenerator(sb,type,valueMap,method,currentValue,tempCurrentValue,id);
 		}
+		*/
 
 	}
 

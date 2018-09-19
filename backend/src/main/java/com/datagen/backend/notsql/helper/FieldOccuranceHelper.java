@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.util.LinkedMultiValueMap;
+import com.datagen.backend.notsql.helper.DistributedCurrentOccuranceHelper;
 
 import com.datagen.backend.model.JsNode;
 import com.datagen.backend.model.Schema;
@@ -82,6 +83,20 @@ public class FieldOccuranceHelper {
 	
 	
 	//Loop
+	public static LinkedMultiValueMap<Integer, Integer> getParentLoop(List<Schema> schema, int id,int parentId,LinkedMultiValueMap<String, Integer> loop){
+		LinkedMultiValueMap<Integer, Integer> newLoop= new LinkedMultiValueMap <Integer, Integer>();
+
+		for(String k : loop.keySet()){
+			String blockTemp = k.substring(k.indexOf('O')+1,k.lastIndexOf('P'));
+			//String parentTemp = k.substring(k.indexOf('P')+1,k.length());
+			int block = Integer.parseInt(blockTemp);
+			//int parent = Integer.parseInt(parentTemp);
+			int occur = loop.getFirst(k);
+			newLoop.add(block, occur);
+		}
+		return newLoop;
+	}
+////////////////////////NOT USED=========================================================================================
 	public static LinkedMultiValueMap<Integer, Integer> getCalculatedLoop(List<Schema> schema, int id,int parentId,LinkedMultiValueMap<Integer, Integer> fieldOccurance){
 		LinkedMultiValueMap<Integer, Integer> newLoop= new LinkedMultiValueMap <Integer, Integer>();
 		for(int k : fieldOccurance.keySet()){
@@ -145,6 +160,7 @@ public class FieldOccuranceHelper {
 		}
 		return childOccur;
 	}
+////////////////////////END NOT USED=========================================================================================
 
 	public static int getLoop(List<ValueCheck> valueTotal, int id, int block){
 		int occurance = 0;
@@ -154,6 +170,36 @@ public class FieldOccuranceHelper {
 				if(occur.containsKey(block)){
 					occurance = occur.getFirst(block);
 				}
+			}
+		}
+		return occurance;
+	}
+
+	public static int getNodeLoop(LinkedMultiValueMap<String, Integer> loop, List<ValueCheck> currentTotal, int id, int parentId, int block){
+		int occurance = 0;
+		if(parentId == 0){
+			for(String k : loop.keySet()){
+				String blockTemp = k.substring(k.indexOf('O')+1,k.lastIndexOf('P'));
+				int bl = Integer.parseInt(blockTemp);
+				if(bl==block){
+					occurance = loop.getFirst(k);
+				}
+			}
+		}else{
+			for(String k : loop.keySet()){
+				String blockTemp = k.substring(k.indexOf('O')+1,k.lastIndexOf('P'));
+				int bl = Integer.parseInt(blockTemp);
+				if(bl==block){
+					String parentTemp = k.substring(k.indexOf('P')+1,k.length());
+					int parent = Integer.parseInt(parentTemp);
+					int parentLastLoop = DistributedCurrentOccuranceHelper.getCurrentLoop(currentTotal, parentId, block);
+					System.out.println("par:"+parent);
+					System.out.println("parLast:"+parentLastLoop);
+					if(parentLastLoop==parent){
+						occurance = loop.getFirst(k);
+					}
+					
+				}	
 			}
 		}
 		return occurance;

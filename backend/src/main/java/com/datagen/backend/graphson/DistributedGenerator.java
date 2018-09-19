@@ -26,7 +26,7 @@ public StringBuilder init(List<Schema> schema,List<DgenMethod> method,long curre
 		for(Schema s:schema){
 			parent.add(s.getKey());
 		}
-		
+		DistributedCurrentOccuranceHelper.clearCurrentLoop(currentValueTotal);
 		int block = FieldOccuranceHelper.getBlock(maxTotal,current);
 		LinkedMultiValueMap<Integer, Long> vertexIdMap = Helper.setVertexId(schema, block, valueTotal, graphsonId);
 		LinkedMultiValueMap<Integer, Long> edgeIdMap = new LinkedMultiValueMap<Integer, Long>();
@@ -84,8 +84,11 @@ public StringBuilder init(List<Schema> schema,List<DgenMethod> method,long curre
 			for(JsNode value : property) {
 				int id = value.getId();
 				String name = value.getNodeName();
+				int parentId = value.getParentId();
+				LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
 				long propId = graphsonId.getPropertyId()+1;
 				int loop = FieldOccuranceHelper.getLoop(valueTotal,id,block);
+				//int loop = FieldOccuranceHelper.getNodeLoop(pLoop,currentValueTotal,id,parentId,block);
 				graphsonId.setPropertyId(propId);
 				
 				sb.append("\""+name+"\":");

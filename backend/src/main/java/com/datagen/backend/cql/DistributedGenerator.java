@@ -75,11 +75,14 @@ public class DistributedGenerator {
 		for(JsNode value : values) {
 			int id = value.getId();
 			String name = value.getNodeName();
+			int parentId = value.getParentId();
+			LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
 			if(DistributedCurrentOccuranceHelper.isInBlock(valueTotal,id,block)){
 				
 				if(!parent.contains(id)){
 					createProperty(sb,name);
 					int loop = FieldOccuranceHelper.getLoop(valueTotal,id,block);
+					//int loop = FieldOccuranceHelper.getNodeLoop(pLoop,currentValueTotal,id,parentId,block);
 					if(loop>1){
 						sb.append("[");
 					}

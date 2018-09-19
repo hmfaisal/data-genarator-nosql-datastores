@@ -34,18 +34,7 @@ public class DistributedGenerator {
 	}
 	
 	public void generator(int key, List<Schema> schema,  List<DgenMethod> met,LinkedHashSet<Integer> parent,StringBuilder sb,long current,List<ValueCheck> valueTotal,List<ValueCheck> currentValueTotal,int block,List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue){
-		/*
-		String temp = sb.toString();
-		String lastChar = temp.substring(temp.length() - 1); 
-		if(lastChar.equals(",")){
-			sb.deleteCharAt(sb.lastIndexOf(","));
-			sb.append("}");
-		}else{
-			sb.append("}");
-		}
-		*/
-		
-		
+
 		Collection<JsNode> values = null;
 		for(Schema s:schema){
 			if(s.getKey()==key){
@@ -54,8 +43,11 @@ public class DistributedGenerator {
 		}
 		for(JsNode value : values) {
 			int id = value.getId();
+			int parentId = value.getParentId();
+			LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
 			if(DistributedCurrentOccuranceHelper.isInBlock(valueTotal,id,block)){
-				int loop = FieldOccuranceHelper.getLoop(valueTotal,id,block);
+				//int loop = FieldOccuranceHelper.getLoop(valueTotal,id,block);
+				int loop = FieldOccuranceHelper.getNodeLoop(pLoop,currentValueTotal,id,parentId,block);
 				for(int i =1;i<=loop;i++){
 					DistributedCurrentOccuranceHelper.setCurrentLoop(currentValueTotal, id, block);
 					if(i>1){

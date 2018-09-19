@@ -32,6 +32,7 @@ public class DistributedOccuranceHelper {
 				String name = value.getNodeName();
 				LinkedMultiValueMap<String, Object> valMap = value.getValueMap();
 				LinkedMultiValueMap<Integer, Integer> fieldOccurance = value.getOccurance();
+				LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
 				String method = MethodChecker.getMethod(id,met);
 				
 				ValueCheck vCheck = new ValueCheck();
@@ -51,7 +52,7 @@ public class DistributedOccuranceHelper {
 				}
 				*/
 				
-				LinkedMultiValueMap<Integer, Integer> loop= FieldOccuranceHelper.getCalculatedLoop(schema,id,parentId,fieldOccurance);
+				LinkedMultiValueMap<Integer, Integer> loop= FieldOccuranceHelper.getParentLoop(schema,id,parentId,pLoop);
 				//LinkedMultiValueMap<Integer, Integer> finalLoop= FieldOccuranceHelper.getParentCalculatedLoop(schema,id,parentId,fieldOccurance);
 				//vCheck.setLoop(loop);
 				

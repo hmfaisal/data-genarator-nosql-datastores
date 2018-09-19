@@ -101,13 +101,14 @@ public class DistributedCurrentOccuranceHelper {
 					LinkedMultiValueMap<Integer, Integer> newLoop= new LinkedMultiValueMap <Integer, Integer>();
 					newLoop.add(block,occurance+1);
 					value.setLoop(newLoop);
+					break;
 				}
 			}
 		}
 	}
 	
 	public static int getCurrentLoop(List<ValueCheck> currentTotal, int id,int block){
-		int loop =0;
+		int loop =1;
 		for(ValueCheck value: currentTotal){
 			if(id==value.getId()){
 				LinkedMultiValueMap<Integer, Integer> occur= value.getLoop();

@@ -3,6 +3,7 @@ package com.datagen.backend.notsql.helper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.LinkedHashSet;
 
 import org.springframework.util.LinkedMultiValueMap;
 import com.datagen.backend.notsql.helper.DistributedCurrentOccuranceHelper;
@@ -33,16 +34,18 @@ public class FieldOccuranceHelper {
 	}
 	
 	public static int actualTotalOccurance(List<Schema> schema){
-		int actual = 0;
+		int actual = 1;
 		for(Schema s:schema){
 			if(s.getKey()==0){
 				Collection<JsNode> values = s.getValue();
 				for(JsNode value : values) {
 					LinkedMultiValueMap<Integer, Integer> occurance = value.getOccurance();
-					int occur = occurance.keySet().size();
-					if(occur>actual){
-						actual = occur;
+					for(int occur : occurance.keySet()){
+						if(occur>actual){
+							actual = occur;
+						}
 					}
+					//int occur = occurance.keySet().size();
 				}
 			}
 		}
@@ -175,6 +178,19 @@ public class FieldOccuranceHelper {
 		return occurance;
 	}
 
+	public static Collection<JsNode> getProperty(Collection<JsNode> values,LinkedHashSet<Integer> parent,List<ValueCheck> valueTotal,int block){
+		Collection<JsNode> keyVal = new ArrayList<JsNode>();
+		for(JsNode value : values) {
+			int id = value.getId();
+			if(DistributedCurrentOccuranceHelper.isInBlock(valueTotal,id,block)){
+				if(!parent.contains(id)){
+					keyVal.add(value);
+				}
+			}
+		}
+		return keyVal;
+	}
+
 	public static int getNodeLoop(LinkedMultiValueMap<String, Integer> loop, List<ValueCheck> currentTotal, int id, int parentId, int block){
 		int occurance = 0;
 		if(parentId == 0){
@@ -193,13 +209,54 @@ public class FieldOccuranceHelper {
 					String parentTemp = k.substring(k.indexOf('P')+1,k.length());
 					int parent = Integer.parseInt(parentTemp);
 					int parentLastLoop = DistributedCurrentOccuranceHelper.getCurrentLoop(currentTotal, parentId, block);
-					System.out.println("par:"+parent);
-					System.out.println("parLast:"+parentLastLoop);
 					if(parentLastLoop==parent){
 						occurance = loop.getFirst(k);
 					}
 					
 				}	
+			}
+		}
+		return occurance;
+	}
+
+	public static int getNodeJsonLoop(LinkedMultiValueMap<String, Integer> ploop, List<ValueCheck> currentTotal, int pid, int block,LinkedHashSet<Integer> parent,List<Schema> schema){
+		int occurance = 0;
+		Collection<JsNode> values = null;
+		for(Schema s:schema){
+			if(s.getKey()==pid){
+				values = s.getValue();
+			}
+		}
+		//int parCurLoop = DistributedCurrentOccuranceHelper.getCurrentLoop(currentTotal, pid, block);
+		for(JsNode value : values) {
+			int id = value.getId();
+			LinkedMultiValueMap<String, Integer> loop = value.getLoop();
+			//int childCurLoop = DistributedCurrentOccuranceHelper.getCurrentLoop(currentTotal, id, block);
+			int occur = 0;
+			for(String k : loop.keySet()){
+				String blockTemp = k.substring(k.indexOf('O')+1,k.lastIndexOf('P'));
+				int bl = Integer.parseInt(blockTemp);
+				if(bl==block){
+					String parentTemp = k.substring(k.indexOf('P')+1,k.length());
+					int par = Integer.parseInt(parentTemp);
+					/*
+					if(parCurLoop==0 ){
+						occur = loop.getFirst(k);
+						break;
+					}else if(parCurLoop==par){
+						occur = loop.getFirst(k);
+					}
+					*/
+					int oc = loop.getFirst(k);
+					if(occur == 0){
+						occur = oc;
+					}else if(oc>=occur){
+						occur = oc;
+					}
+				}
+			}
+			if(occur>=occurance){
+				occurance = occur;
 			}
 		}
 		return occurance;

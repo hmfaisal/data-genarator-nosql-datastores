@@ -28,11 +28,73 @@ public class DistributedGenerator {
 		DistributedCurrentOccuranceHelper.clearCurrentLoop(currentValueTotal);
 		int block = FieldOccuranceHelper.getBlock(maxTotal,current);
 		sb.append("{");
-		generator(0,schema,method,parent,sb,current,valueTotal,currentValueTotal,block,currentValue,tempCurrentValue);
+		jgenerator(0,schema,method,parent,sb,current,valueTotal,currentValueTotal,block,currentValue,tempCurrentValue);
 		sb.append("}");
 		return sb;
 	}
-	
+
+	public void jgenerator(int key, List<Schema> schema,  List<DgenMethod> met,LinkedHashSet<Integer> parent,StringBuilder sb,long current,List<ValueCheck> valueTotal,List<ValueCheck> currentValueTotal,int block,List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue){
+		Collection<JsNode> values = null;
+		for(Schema s:schema){
+			if(s.getKey()==key){
+				values = s.getValue();
+			}
+		}
+		for(JsNode value : values) {
+			int id = value.getId();
+			int parentId = value.getParentId();
+			LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
+			String name = value.getNodeName();
+			String type = value.getValueType();
+			LinkedMultiValueMap<String, Object> valueMap = value.getValueMap();
+			String method = MethodChecker.getMethod(id,met);
+			if(DistributedCurrentOccuranceHelper.isInBlock(valueTotal,id,block)){
+				if(!parent.contains(id)){
+					DistributedCurrentOccuranceHelper.setCurrentLoop(currentValueTotal, id, block);
+					sb.append("\""+ name +"\"" + ":");
+					valueScope(sb,type,current,valueMap,method,currentValue,tempCurrentValue,valueTotal,currentValueTotal,id);
+					boolean nextInBlock = DistributedCurrentOccuranceHelper.nextInBlock(values,id,valueTotal,block);
+					int lastElement = FieldOccuranceHelper.getLastElement(values);
+					if(id != lastElement && nextInBlock==true){
+						sb.append(",");
+					}
+				}
+				else if(parent.contains(id)){
+					sb.append("\""+ name +"\"" + ":");
+					openBracketScope(type,sb);
+					int loop = FieldOccuranceHelper.getNodeJsonLoop(pLoop,currentValueTotal,id,block,parent,schema);
+					for(int i =1;i<=loop;i++){
+						DistributedCurrentOccuranceHelper.setCurrentLoop(currentValueTotal, id, block);
+						if(i>1){
+							sb.append("{");
+						}
+						jgenerator(id,schema,met,parent,sb,current,valueTotal,currentValueTotal,block,currentValue,tempCurrentValue);
+						//closeBracketScope(key, i, loop, id,values, sb, schema, valueTotal,block);
+						int lastElement = FieldOccuranceHelper.getLastElement(values);
+						boolean nextInBlock = DistributedCurrentOccuranceHelper.nextInBlock(values,id,valueTotal,block);
+						if(type.equals("ARRAY")){
+							if(i<loop){
+								sb.append("},");
+							}else if(i==loop && (id != lastElement && nextInBlock==true)){
+								sb.append("}],");
+							}else if(i==loop && (id == lastElement || nextInBlock==false)){
+								sb.append("}]");
+							}
+						}else if(type.equals("OBJECT")){
+							if(i==loop && (id != lastElement && nextInBlock==true)){
+								sb.append("},");
+							}else if(i==loop && (id == lastElement || nextInBlock==false)){
+								sb.append("}");
+							}
+						}
+
+					}
+				}
+			}
+			
+		}
+	}
+	/*
 	public void generator(int key, List<Schema> schema,  List<DgenMethod> met,LinkedHashSet<Integer> parent,StringBuilder sb,long current,List<ValueCheck> valueTotal,List<ValueCheck> currentValueTotal,int block,List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue){
 
 		Collection<JsNode> values = null;
@@ -45,24 +107,30 @@ public class DistributedGenerator {
 			int id = value.getId();
 			int parentId = value.getParentId();
 			LinkedMultiValueMap<String, Integer> pLoop = value.getLoop();
+			String name = value.getNodeName();
+			String type = value.getValueType();
+			LinkedMultiValueMap<String, Object> valueMap = value.getValueMap();
+			String method = MethodChecker.getMethod(id,met);
 			if(DistributedCurrentOccuranceHelper.isInBlock(valueTotal,id,block)){
 				//int loop = FieldOccuranceHelper.getLoop(valueTotal,id,block);
-				int loop = FieldOccuranceHelper.getNodeLoop(pLoop,currentValueTotal,id,parentId,block);
+				//int loop = FieldOccuranceHelper.getNodeLoop(pLoop,currentValueTotal,id,parentId,block);
+				int loop = 1;
+				if(parent.contains(id)){
+					loop = FieldOccuranceHelper.getNodeJsonLoop(pLoop,currentValueTotal,id,parentId,block,parent,schema);
+				}
 				for(int i =1;i<=loop;i++){
 					DistributedCurrentOccuranceHelper.setCurrentLoop(currentValueTotal, id, block);
 					if(i>1){
 						sb.append("{");
 					}
-					String name = value.getNodeName();
-					String type = value.getValueType();
-					LinkedMultiValueMap<String, Object> valueMap = value.getValueMap();
-					String method = MethodChecker.getMethod(id,met);
-
-					sb.append("\""+ name +"\"" + ":");
 					if(!parent.contains(id)){
+						sb.append("\""+ name +"\"" + ":");
 						valueScope(sb,type,current,valueMap,method,currentValue,tempCurrentValue,valueTotal,currentValueTotal,id);
 					}else if(parent.contains(id)){
-						openBracketScope(type,sb);
+						if(i==1){
+							sb.append("\""+ name +"\"" + ":");
+							openBracketScope(type,sb);
+						}
 						generator(id,schema,met,parent,sb,current,valueTotal,currentValueTotal,block,currentValue,tempCurrentValue);
 					}
 					
@@ -72,6 +140,8 @@ public class DistributedGenerator {
 			}
 		}
 	}
+	*/
+	
 	
 	public void valueScope(StringBuilder sb,String type,long current,LinkedMultiValueMap<String, Object> valueMap,String method,List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue,List<ValueCheck> valueTotal,List<ValueCheck> currentTotal,int id)	{
 		if(type.equals("ARRAY")){
@@ -95,7 +165,7 @@ public class DistributedGenerator {
 			sb.append("{");
 		}
 	}
-	
+	/*
 	public static void closeBracketScope(int key,int i,int loop, int id, Collection<JsNode> values,StringBuilder sb, List<Schema> schema,List<ValueCheck> valueTotal,int block){
 		String ptype = checkEndType(key,schema);
 		int lastElement = FieldOccuranceHelper.getLastElement(values);
@@ -104,7 +174,7 @@ public class DistributedGenerator {
 			if(ptype.equals("ARRAY")){
 				if(i<loop){
 					sb.append("},");
-				}else if(id == lastElement || nextInBlock==false){
+				}else if(nextInBlock==false){
 					sb.append("}]");
 				}else if(id != lastElement && nextInBlock==true){
 					sb.append(",");
@@ -137,6 +207,7 @@ public class DistributedGenerator {
 		}
 		return ptype;
 	}
+	*/
 
 }
 

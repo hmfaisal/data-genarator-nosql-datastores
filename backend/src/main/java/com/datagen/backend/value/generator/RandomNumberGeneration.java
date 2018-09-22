@@ -28,9 +28,7 @@ public class RandomNumberGeneration {
 		if(range<=0){
 			range = 1;
 		}
-		System.out.println(min);
-		System.out.println(range);
-	    return ThreadLocalRandom.current().nextInt(min, range * 10);
+	    return ThreadLocalRandom.current().nextInt();
 	}
 	
 	public float floatGenerator(Collection<Object> values){
@@ -66,7 +64,7 @@ public class RandomNumberGeneration {
 		if(range<0){
 			range = 1;
 		}
-	    return ThreadLocalRandom.current().nextLong(min, range * 10);
+	    return ThreadLocalRandom.current().nextLong();
 	}
 	
 	public short shortGenerator(Collection<Object> values){

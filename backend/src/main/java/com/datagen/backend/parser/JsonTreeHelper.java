@@ -67,17 +67,13 @@ public class JsonTreeHelper {
     	if(occurance.isEmpty()){
     		occurance.set(iter, 1);
     	}else{
-    		for(Integer key : occurance.keySet()){
-    			if(key.intValue()==iter){
-    				int cur= occurance.getFirst(key);
-					int newCur = cur+1;
-    				occurance.set(iter, newCur);
-					break;
-    			}else{
-    				occurance.set(iter, 1);
-					break;
-    			}
-    		}
+			if(occurance.containsKey(iter)){
+				int cur= occurance.getFirst(iter);
+				int newCur = cur+1;
+    			occurance.set(iter, newCur);
+			}else{
+				occurance.set(iter, 1);
+			}
     	}
 		n.setOccurance(occurance);
     }

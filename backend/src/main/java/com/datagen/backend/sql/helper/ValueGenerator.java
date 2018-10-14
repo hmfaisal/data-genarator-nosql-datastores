@@ -43,7 +43,8 @@ public class ValueGenerator {
 				if(val==type){
 					Collection<Object> values = valueMap.get(val);
 					String value= wordsBuilder(method,values,currentValue,tempCurrentValue,id);
-					childVal.put(key,value);
+					String finalValue = "\"" + value + "\"";
+					childVal.put(key,finalValue);
 				}
 			}
 		}
@@ -52,7 +53,8 @@ public class ValueGenerator {
 				if(val==type){
 					Collection<Object> values = valueMap.get(val);
 					String value = dateBuilder(method,values,currentValue,tempCurrentValue,id);
-					childVal.put(key,value);
+					String finalValue = "\"" + value + "\"";
+					childVal.put(key,finalValue);
 				}
 			}
 		}
@@ -61,7 +63,8 @@ public class ValueGenerator {
 				if(val==type){
 					Collection<Object> values = valueMap.get(val);
 					String value = alphaNumericBuilder(method,values,currentValue,tempCurrentValue,id);
-					childVal.put(key,value);
+					String finalValue = "\"" + value + "\"";
+					childVal.put(key,finalValue);
 				}
 			}
 		}
@@ -70,7 +73,8 @@ public class ValueGenerator {
 				if(val==type){
 					Collection<Object> values = valueMap.get(val);
 					String value = urlBuilder(method,values,currentValue,tempCurrentValue,id);
-					childVal.put(key,value);
+					String finalValue = "\"" + value + "\"";
+					childVal.put(key,finalValue);
 				}
 			}
 		}

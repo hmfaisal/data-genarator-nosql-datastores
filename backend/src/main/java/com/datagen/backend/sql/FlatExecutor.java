@@ -41,7 +41,7 @@ public class FlatExecutor {
 		Map<Integer, Collection<String>> column = columnName.asMap();
 		long totalData= Math.round(volume / tempSize);
 		//value generator
-		int rootId = 1;
+		//int rootId = 1;
 		Multimap<Integer, Integer> childId = LinkedListMultimap.create();
 		//List<CurrentValue> valMap = ValueChecker.getValue(schema);
 		List<ValueCheck> valueTotal= FlatOccuranceHelper.setTotalCalculation(schema,totalData);
@@ -50,6 +50,7 @@ public class FlatExecutor {
 		long currentSize =0;
 		long startTime = System.currentTimeMillis();
 		for (long i=1; i<=totalData; i++) {
+			long rootId = i;
 			List<CurrentValue> tempCurrentValue= new ArrayList<CurrentValue>();
 			FlatGenerator sqlGen = new FlatGenerator();
 			Multimap<Integer, Object> childVal = sqlGen.init(schema,rootId,childId,method,currentValue,tempCurrentValue,valueTotal,i);
@@ -79,12 +80,13 @@ public class FlatExecutor {
 		Map<Integer, Collection<String>> column = columnName.asMap();
 		long totalData= volume;
 		//value generator
-		int rootId = 1;
+		//int rootId = 1;
 		Multimap<Integer, Integer> childId = LinkedListMultimap.create();
 		//List<CurrentValue> valMap = ValueChecker.getValue(schema);
 		List<ValueCheck> valueTotal= FlatOccuranceHelper.setTotalCalculation(schema,totalData);
 		List<CurrentValue> currentValue= new ArrayList<CurrentValue>();
 		for (long i=1; i<=totalData; i++) {
+			long rootId = i;
 			List<CurrentValue> tempCurrentValue= new ArrayList<CurrentValue>();
 			FlatGenerator sqlGen = new FlatGenerator();
 			Multimap<Integer, Object> childVal = sqlGen.init(schema,rootId,childId,method,currentValue,tempCurrentValue,valueTotal,i);

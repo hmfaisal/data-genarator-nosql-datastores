@@ -22,23 +22,27 @@ public class SqlSyntaxBuilder {
 			parent.add(s.getKey());
 		}
 		for(Schema s:schema) {
+			StringBuilder tpsb = new StringBuilder();
 			int key = s.getKey();
 			Collection<JsNode> values = s.getValue();
 			String pn = getParentName(values);
-			tsb.append("CREATE TABLE IF NOT EXISTS"+" "+pn+key);
-			tsb.append("(");
-			columnBuilder(tsb,values,key,parent,columnName);
+			tpsb.append("CREATE TABLE IF NOT EXISTS"+" "+pn+key);
+			tpsb.append("(");
+			columnBuilder(tpsb,values,key,parent,columnName);
 
-			tsb.append(pn+key+" "+"INTEGER"+" "+"NOT NULL"+","+" ");
-			tsb.append("PRIMARY KEY"+" "+"("+pn+key+")");
+			tpsb.append(pn+key+" "+"BIGINT"+" "+"NOT NULL"+","+" ");
+			tpsb.append("PRIMARY KEY"+" "+"("+pn+key+")");
 			columnName.put(key,pn+key);
 			
-			tsb.append(")");
-			tsb.append(";");
-			tsb.append("\n");
+			tpsb.append(")");
+			tpsb.append(";");
+			tpsb.append("\n");
+			String sb = tpsb.toString();
+			tsb.insert(0,sb);
 		}
 		return tsb;
 	}
+
 
 	public void columnBuilder( StringBuilder tsb, Collection<JsNode> values, Integer key, LinkedHashSet<Integer> parent,Multimap<Integer, String> columnName){
 		int ki =key;
@@ -49,7 +53,7 @@ public class SqlSyntaxBuilder {
 			LinkedMultiValueMap<String, Object> valueMap = value.getValueMap();
 			if(parent.contains(id)){
 				key=id;
-				tsb.append(name+key+" "+"INTEGER"+" "+"NOT NULL"+","+" ");
+				tsb.append(name+key+" "+"BIGINT"+" "+"NOT NULL"+","+" ");
 				tsb.append("FOREIGN KEY"+" "+"("+name+key+")"+" "+"REFERENCES"+" "+name+key+"("+name+id+")"+","+" ");
 				columnName.put(ki,name+key);
 			}else{

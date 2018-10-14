@@ -90,7 +90,11 @@ public class FlatGenerator {
 	}
 	
 	public void createRelation(List<Schema> schema, LinkedHashSet<Integer> parent, StringBuilder sb,long current){
-		sb.append("CREATE"+"\n");
+		boolean hasChild = hasChild(schema,parent);
+		if (hasChild){
+			sb.append("CREATE"+"\n");
+		}
+		
 		int size=parent.size();
 		int curSize=size-1;
 		for(Schema s:schema){
@@ -116,6 +120,20 @@ public class FlatGenerator {
 				}
 			}
 		}
+	}
+
+	public boolean hasChild(List<Schema> schema,LinkedHashSet<Integer> parent){
+		for(Schema s:schema){
+			int key = s.getKey();
+			Collection<JsNode> values = s.getValue();
+			for(JsNode value : values) {
+				int id = value.getId();
+				if(parent.contains(id)){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public void valueScope(JsNode value, int id, StringBuilder sb, LinkedHashSet<Integer> parent, List<ValueCheck> valueTotal, List<DgenMethod> met, long current, List<CurrentValue> currentValue, List<CurrentValue> tempCurrentValue){

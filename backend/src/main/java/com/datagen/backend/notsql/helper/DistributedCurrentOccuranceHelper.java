@@ -260,6 +260,7 @@ public class DistributedCurrentOccuranceHelper {
 			int id = value.getId();
 			if(!parent.contains(id)){
 				bool = isInBlock(valueTotal,id,block);
+				System.out.println(bool);
 				if(bool==true){
 					break;
 		    	}

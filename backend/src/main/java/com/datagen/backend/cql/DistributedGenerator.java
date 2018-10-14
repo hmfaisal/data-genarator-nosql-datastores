@@ -42,6 +42,7 @@ public class DistributedGenerator {
 				String keyName = "root";
 				createLabel(sb,keyName,key,current);
 				boolean hasNext= DistributedCurrentOccuranceHelper.rootNextInBlock(values,valueTotal,parent,block);
+				
 				if(hasNext==true){
 					sb.append("{");
 					nodeGenerator(sb,schema,valueTotal,currentValueTotal,method,current,currentValue,tempCurrentValue,parent,key,block,values);
@@ -110,7 +111,10 @@ public class DistributedGenerator {
 	}
 	
 	public void createRelation(List<Schema> schema, LinkedHashSet<Integer> parent, StringBuilder sb,List<ValueCheck> valueTotal,int block,long current){
-		sb.append("CREATE"+"\n");
+		boolean hasChild = hasChild(schema,parent);
+		if (hasChild){
+			sb.append("CREATE"+"\n");
+		}
 		for(Schema s:schema){
 			int key = s.getKey();
 			Collection<JsNode> values = s.getValue();
@@ -132,6 +136,20 @@ public class DistributedGenerator {
 				}
 			}
 		}
+	}
+
+	public boolean hasChild(List<Schema> schema,LinkedHashSet<Integer> parent){
+		for(Schema s:schema){
+			int key = s.getKey();
+			Collection<JsNode> values = s.getValue();
+			for(JsNode value : values) {
+				int id = value.getId();
+				if(parent.contains(id)){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public void valueScope(JsNode value, int id, StringBuilder sb, LinkedHashSet<Integer> parent, List<ValueCheck> valueTotal,List<ValueCheck> currentTotal, List<DgenMethod> met, long current, List<CurrentValue> currentValue, List<CurrentValue> tempCurrentValue){

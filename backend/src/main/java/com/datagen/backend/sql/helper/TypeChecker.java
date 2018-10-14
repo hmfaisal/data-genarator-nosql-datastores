@@ -123,12 +123,14 @@ public class TypeChecker {
 	
 	public static String dateChecker(String valueType){
 		if(valueType.isEmpty()){
-			valueType="DATETIME";
+			//valueType="DATETIME";
+			valueType="VARCHAR(255)";
 		}
 		else if(valueType.equals("TEXT")||valueType.equals("BOOLEAN")||valueType.contains("VARCHAR")){
 			
 		}else{
-			valueType="DATETIME";
+			//valueType="DATETIME";
+			valueType="VARCHAR(255)";
 		}
 		return valueType;
 	}

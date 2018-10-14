@@ -21,7 +21,7 @@ import com.google.common.collect.Multimap;
 
 public class FlatGenerator {
 	
-	public Multimap<Integer, Object> init(List<Schema> schema, int rootId, Multimap<Integer, Integer> childId, List<DgenMethod> method, List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue, List<ValueCheck> valueTotal,long current){
+	public Multimap<Integer, Object> init(List<Schema> schema, long rootId, Multimap<Integer, Integer> childId, List<DgenMethod> method, List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue, List<ValueCheck> valueTotal,long current){
 		Multimap<Integer, Object> childVal = LinkedListMultimap.create();
 		LinkedHashSet<Integer> parent = new LinkedHashSet<Integer>();
 		for(Schema s:schema){
@@ -31,7 +31,7 @@ public class FlatGenerator {
 		return childVal;
 	}
 	
-	public void generator(int key, List<Schema> schema, LinkedHashSet<Integer> parent, Multimap<Integer, Integer> childId, int rootId,Multimap<Integer, Object> childVal, List<DgenMethod> met, List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue,List<ValueCheck> valueTotal,long current){
+	public void generator(int key, List<Schema> schema, LinkedHashSet<Integer> parent, Multimap<Integer, Integer> childId, long rootId,Multimap<Integer, Object> childVal, List<DgenMethod> met, List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue,List<ValueCheck> valueTotal,long current){
 		
 		Collection<JsNode> values = null;
 		for(Schema s:schema){
@@ -62,7 +62,7 @@ public class FlatGenerator {
 		}
 	}
 	
-	public void closureScope(int id, String type, LinkedMultiValueMap<String, Object> valueMap, int key, List<Schema> schema, String method, List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue,Multimap<Integer, Integer> childId, int rootId,Multimap<Integer, Object> childVal, long current, LinkedMultiValueMap<String, Long> currentTotal){
+	public void closureScope(int id, String type, LinkedMultiValueMap<String, Object> valueMap, int key, List<Schema> schema, String method, List<CurrentValue> currentValue,List<CurrentValue> tempCurrentValue,Multimap<Integer, Integer> childId, long rootId,Multimap<Integer, Object> childVal, long current, LinkedMultiValueMap<String, Long> currentTotal){
 		if(!type.equals("ARRAY") || !type.equals("OBJECT")){
 			ValueGenerator.flatValueGenerator(childVal,current,currentTotal,valueMap,method,currentValue,tempCurrentValue,id,key);
 		}
@@ -76,7 +76,7 @@ public class FlatGenerator {
 		}
 	}
 	
-	public void endScope(int currentId, int key, List<Schema> schema, Multimap<Integer, Integer> childId, int rootId,Multimap<Integer, Object> childVal){
+	public void endScope(int currentId, int key, List<Schema> schema, Multimap<Integer, Integer> childId, long rootId,Multimap<Integer, Object> childVal){
 		Collection<Integer> cId = childId.get(key);
 		if(cId.isEmpty()){
 			currentId = 1;
